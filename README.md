@@ -1,5 +1,5 @@
 # InstragramPostOnMap
-assignment on laravel, vue, MongoDb
+Assignment on laravel, vue, MongoDb
 
 Need to setup following key into .env file
 
@@ -15,6 +15,7 @@ GOOGLE_MAP_API_KEY
 ```
 
 Import infamous.sql into mysql db.
+Install all depdedency using composer
 
 ##Pending:
 
