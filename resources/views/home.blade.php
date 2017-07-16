@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
 
@@ -18,16 +18,18 @@
                     </div>
                 
                   <br />
-                  <ul id="listPosts" style="display: none" class="list-group">
-                      <li v-for="post in posts" class="list-group-item">
-                          @{{ post.caption | truncate 50}}
-                          <button v-on:click="locateInstaPosts(post)" v-if="post.location" type="button" class="btn btn-primary">Locate</button>
-                          <button v-on:click="saveInstaPosts(post, $event)" v-if="post.saved == false" type="button" class="btn btn-primary">Save</button>
-                      </li>
-                  </ul>
+                  <div class="col-md-6">
+                    <ul id="listPosts" style="display: none" class="list-group">
+                        <li v-for="post in posts" class="list-group-item">
+                            @{{ post.caption | truncate 50}}
+                            <button v-on:click="locateInstaPosts(post)" v-if="post.location" type="button" class="btn btn-primary">Locate</button>
+                            <button v-on:click="saveInstaPosts(post, $event)" v-if="post.saved == false" type="button" class="btn btn-primary">Save</button>
+                        </li>
+                    </ul>
+                  </div>
 
-                  <div id="postMapdata" style="display: none;">
-                      <div id="map" style="margin: 5px;height: 500px;width: 500px"></div>
+                  <div id="postMapdata" class="col-md-6" style="display: none">
+                      <div id="map" style="margin: 5px;height: 400px;width: 400px"></div>
                   </div>
                 </div>
 
@@ -162,7 +164,7 @@ function listPosts(posts) {
             },
             locateInstaPosts: function(post) {
                 if (post.location) {
-                    window.location.hash='map';
+                    locatePostOnMap(post);                    
                 } else {
                     alert('No location found with this post');
                 }
