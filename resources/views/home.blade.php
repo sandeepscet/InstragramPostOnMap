@@ -65,9 +65,7 @@ var myViewModel = new Vue({
 
                     if (postWithLocation.length) {
                         renderGoogleMap(postWithLocation);
-                    } else {
-                        alert('no Post with location found');
-                    }
+                    } 
                 } else {
                     alert('Post for mentioned username not found');
                 }
@@ -75,6 +73,28 @@ var myViewModel = new Vue({
         }
     }
 });
+
+var vueListPost = new Vue({
+        el: '#listPosts',
+        data: {
+            posts: []
+        },
+        methods: {
+            saveInstaPosts: function(post, event) {
+                saveInstaPostData(post, function(response) {
+                    alert('Post saved');
+                    event.target.style.display = 'none';
+                })
+            },
+            locateInstaPosts: function(post) {
+                if (post.location) {
+                    locatePostOnMap(post);                    
+                } else {
+                    alert('No location found with this post');
+                }
+            }
+        }
+    })
 
 
 function addMarkers(map, data) {
@@ -152,29 +172,10 @@ function saveInstaPostData(post, callback) {
     })
 }
 
+
 function listPosts(posts) {
     $('#listPosts').show();
-    var vueListPost = new Vue({
-        el: '#listPosts',
-        data: {
-            posts: posts
-        },
-        methods: {
-            saveInstaPosts: function(post, event) {
-                saveInstaPostData(post, function(response) {
-                    alert('Post saved');
-                    event.target.style.display = 'none';
-                })
-            },
-            locateInstaPosts: function(post) {
-                if (post.location) {
-                    locatePostOnMap(post);                    
-                } else {
-                    alert('No location found with this post');
-                }
-            }
-        }
-    })
+    vueListPost.$set('posts', posts);
 }
 
 function loadScript(src, callback) {
