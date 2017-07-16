@@ -10,16 +10,35 @@
                 <div class="panel-body">
                     <div id="my_view">
 
-                    <div id="searchDiv">
-                       <input type="text" name="searchTerm" v-model="searchTerm"/>
+                    <form class="form-horizontal" onsubmit="return false;">
+                      <fieldset>
 
-                       <input type="radio" id="asc" value="asc" v-model="sortOrder" selected="selected">
-                      <label for="asc">asc</label>
-                      <input type="radio" id="desc" value="desc" v-model="sortOrder">
-                      <label for="desc">desc</label>
+                      <div class="form-group">
+                        <label class="col-md-4 control-label" for="searchTerm">Search</label>  
+                        <div class="col-md-4">
+                        <input id="searchTerm" name="searchTerm" v-model="searchTerm" type="text" placeholder="Search in caption" class="form-control input-md">
+                        </div>
+                      </div>
 
-                      <button v-on:click="searchPosts">Search</button>
+                      <div class="form-group">
+                        <label class="col-md-4 control-label" for="sortBy">Search radius</label>
+                        <div class="col-md-4">
+                          <select id="sortBy" name="radius" class="form-control" v-model="sortOrder">
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                      <label class="col-md-4 control-label" for="submit"></label>
+                      <div class="col-md-4">
+                        <button id="submit" name="submit" class="btn btn-primary"  v-on:click="searchPosts">Search</button>
+                      </div>
                     </div>
+
+                      </fieldset>
+                    </form>
 
                     <div id="gallaryBlock">
                             <div class="row">
@@ -27,6 +46,7 @@
                                   <h1 class="gallery-title">Gallery</h1>
                               </div>
 
+                              <h1 v-if="posts.length == 0">No Post found.</h1>
                               <div v-for="post in posts" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter sprinkle" style="margin-bottom: 30px;">
                                   <img v-bind:src=post.standard_resolution.url class="img-responsive"  height="@{{ post.standard_resolution.height" width="@{{ post.standard_resolution.width" alt="@{{ post.caption  | truncate 50}}">
                                       <p>@{{ post.caption  | truncate 50}}</p>
@@ -48,7 +68,8 @@ Vue.filter('truncate', function (text, stop, clamp) {
     })
 
 var myModel = {
-  posts: []
+  posts: [],
+  sortOrder : 'desc'
   };
 
   var myViewModel = new Vue({
