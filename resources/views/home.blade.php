@@ -10,13 +10,21 @@
                 <div class="panel-body">
                     <div id="my_view">
                         <div id="searchDiv">
-                            <form onsubmit="return false">
-                                <input type="text" name="instaUserName" v-model="instaUserName" value="katyperry" required/>
-                                <button v-on:click="searchInstaPosts" id="getPost">Get</button>
+                            <form class="form-horizontal" onsubmit="return false">
+                                <div class="col-xs-4">
+                                    <input type="text" name="instaUserName" v-model="instaUserName" value="katyperry" required class="form-control" />
+                                  </div>
+                                  <div class="col-xs-2">
+                                    <button v-on:click="searchInstaPosts" id="getPost" class="btn  btn-primary">
+                                      Get Post
+                                    </button>
+                                    <span v-show="loading">Loading</span>
+                                  </div>                                
                             </form>
                         </div>
                     </div>
                 
+                  <br />
                   <br />
                   <div class="col-md-6">
                     <ul id="listPosts" style="display: none" class="list-group">
@@ -49,8 +57,13 @@ Vue.filter('truncate', function(text, stop, clamp) {
 
 var myViewModel = new Vue({
     el: '#my_view',
+    data: {
+            loading: false
+        },
     methods: {
         searchInstaPosts: function() {
+            var vueThis = this;
+            vueThis.$set('loading', true);
             getInstaPostData(this.$get('instaUserName'), function(posts) {
                 if (posts.length) {
                     listPosts(posts);
@@ -69,6 +82,8 @@ var myViewModel = new Vue({
                 } else {
                     alert('Post for mentioned username not found');
                 }
+               
+                vueThis.$set('loading', false);
             });
         }
     }
@@ -95,7 +110,6 @@ var vueListPost = new Vue({
             }
         }
     })
-
 
 function addMarkers(map, data) {
     var marker = new google.maps.Marker({
