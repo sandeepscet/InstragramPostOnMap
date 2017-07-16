@@ -86,6 +86,7 @@ class HomeController extends Controller
 
         $filteredPostData = array();
 
+        $postIds = array();
         for($index = 0 ;$index < count($posts); $index++)
         {
             $filteredPost = array();
@@ -115,7 +116,21 @@ class HomeController extends Controller
             
 
             array_push($filteredPostData, $filteredPost);
+            array_push($postIds, $filteredPost['id']);
         }
+
+        $DbPosts = Posts::whereIn('postId',$postIds)->get();
+        
+         $savedPostIds = array();
+        foreach ($DbPosts as $dbPost) {
+            array_push($savedPostIds, $dbPost['attributes']['postId']);
+        }
+
+        for($index = 0 ;$index < count($filteredPostData); $index++)
+        {
+            $filteredPostData[$index]['saved'] = in_array($filteredPostData[$index]['id'], $savedPostIds);
+        }
+
         return response()->json($filteredPostData, 200);
      
     }

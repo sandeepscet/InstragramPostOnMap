@@ -16,18 +16,19 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                
 
-                <ul id="listPosts" style="display: none">
-                    <li v-for="post in posts">
-                        @{{ post.caption | truncate 50}}
-                        <button v-on:click="locateInstaPosts(post)">Locate</button>
-                        <button v-on:click="saveInstaPosts(post)">Save</button>
-                    </li>
-                </ul>
+                  <ul id="listPosts" style="display: none">
+                      <li v-for="post in posts">
+                          @{{ post.caption | truncate 50}}
+                          <button v-on:click="locateInstaPosts(post)" v-if="post.location">Locate</button>
+                          <button v-on:click="saveInstaPosts(post, $event)" v-if="post.saved == false">Save</button>
+                      </li>
+                  </ul>
 
-                <div id="postMapdata" style="display: none;">
-                    <div id="map" style="margin: 5px;height: 500px;width: 500px"></div>
+                  <div id="postMapdata" style="display: none;">
+                      <div id="map" style="margin: 5px;height: 500px;width: 500px"></div>
+                  </div>
                 </div>
 
             </div>
@@ -51,6 +52,7 @@ function addMarkers(map, data) {
 }
 
 function locatePostOnMap(post) {
+    window.location.hash='map';
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: post.location.lat,
@@ -153,9 +155,10 @@ function listPosts(posts) {
             posts: posts
         },
         methods: {
-            saveInstaPosts: function(post) {
+            saveInstaPosts: function(post, event) {
                 saveInstaPostData(post, function(response) {
                     alert('Post saved');
+                    event.target.style.display = 'none';
                 })
             },
             locateInstaPosts: function(post) {
