@@ -43,45 +43,6 @@
 var googleMapScriptUrl = "{{ $googleMapURL }}";
 var googleMapApiKeys = "{{ $googleMapApiKey }}";
 
-function addMarkers(map, data) {
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(data.location.lat, data.location.lng),
-        map: map
-    });
-
-    google.maps.event.addListener(marker, 'click', function() {
-        var infowindow = new google.maps.InfoWindow();
-        var contentString = '<div data-postId="' + data.id + '" class="infoMarker"><strong>' + data.caption + '</strong><img width="' + data.thumbnail.width + '" height="' + data.thumbnail.height + '" src="' + data.thumbnail.url + '" /></div>';
-        infowindow.setContent(contentString);
-        infowindow.open(map, this);
-    });
-}
-
-function locatePostOnMap(post) {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: post.location.lat,
-            lng: post.location.lng
-        },
-        zoom: 15
-    });
-    addMarkers(map, post);
-}
-
-function initMap(posts) {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: posts[0]['location']['lat'],
-            lng: posts[0]['location']['lng']
-        },
-        zoom: 15
-    });
-
-    for (var i = 0; i < posts.length; i++) {
-        addMarkers(map, posts[i]);
-    }
-}
-
 Vue.filter('truncate', function(text, stop, clamp) {
     return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
 })
@@ -115,6 +76,32 @@ var myViewModel = new Vue({
     }
 });
 
+
+function addMarkers(map, data) {
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(data.location.lat, data.location.lng),
+        map: map
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+        var infowindow = new google.maps.InfoWindow();
+        var contentString = '<div data-postId="' + data.id + '" class="infoMarker"><strong>' + data.caption + '</strong><img width="' + data.thumbnail.width + '" height="' + data.thumbnail.height + '" src="' + data.thumbnail.url + '" /></div>';
+        infowindow.setContent(contentString);
+        infowindow.open(map, this);
+    });
+}
+
+function locatePostOnMap(post) {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: post.location.lat,
+            lng: post.location.lng
+        },
+        zoom: 15
+    });
+    addMarkers(map, post);
+}
+
 function renderGoogleMap(posts) {
     var googleMapScript = googleMapScriptUrl+"?key="+googleMapApiKeys+"&libraries=places";
 
@@ -123,6 +110,19 @@ function renderGoogleMap(posts) {
     });
 }
 
+function initMap(posts) {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: posts[0]['location']['lat'],
+            lng: posts[0]['location']['lng']
+        },
+        zoom: 15
+    });
+
+    for (var i = 0; i < posts.length; i++) {
+        addMarkers(map, posts[i]);
+    }
+}
 
 function getInstaPostData(instaUserName = '', callback) {
     $.ajax({
@@ -176,8 +176,6 @@ function listPosts(posts) {
         }
     })
 }
-
-
 
 function loadScript(src, callback) {
     var s,
