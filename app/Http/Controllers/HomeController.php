@@ -82,7 +82,12 @@ class HomeController extends Controller
     {
         $instagram = new Instagram(); 
         $client = new Client();
-        $posts = $instagram->get($request->input('instaUserName'));
+        try{
+            $posts = $instagram->get($request->input('instaUserName'));
+        }
+        catch (\Exception $e) {
+            return response()->json([], 200);
+        }
 
         $filteredPostData = array();
 
