@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home')->with(array('googleMapURL' => env('GOOGLE_MAP_SCRIPT_URL') , 'googleMapApiKey' => env('GOOGLE_MAP_API_KEY')));
     }
 
     public function list()

@@ -39,6 +39,10 @@
 </div>
 
 <script type="text/javascript">
+
+var googleMapScriptUrl = "{{ $googleMapURL }}";
+var googleMapApiKeys = "{{ $googleMapApiKey }}";
+
 function addMarkers(map, data) {
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(data.location.lat, data.location.lng),
@@ -112,9 +116,9 @@ var myViewModel = new Vue({
 });
 
 function renderGoogleMap(posts) {
-    var googleMapScriptUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC2ibM65vFttmlKibb1yv8eUyfWKPa1Otk&libraries=places";
+    var googleMapScript = googleMapScriptUrl+"?key="+googleMapApiKeys+"&libraries=places";
 
-    loadScript(googleMapScriptUrl, function() {
+    loadScript(googleMapScript, function() {
         initMap(posts);
     });
 }
