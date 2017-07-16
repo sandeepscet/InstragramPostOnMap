@@ -17,12 +17,12 @@
                         </div>
                     </div>
                 
-
-                  <ul id="listPosts" style="display: none">
-                      <li v-for="post in posts">
+                  <br />
+                  <ul id="listPosts" style="display: none" class="list-group">
+                      <li v-for="post in posts" class="list-group-item">
                           @{{ post.caption | truncate 50}}
-                          <button v-on:click="locateInstaPosts(post)" v-if="post.location">Locate</button>
-                          <button v-on:click="saveInstaPosts(post, $event)" v-if="post.saved == false">Save</button>
+                          <button v-on:click="locateInstaPosts(post)" v-if="post.location" type="button" class="btn btn-primary">Locate</button>
+                          <button v-on:click="saveInstaPosts(post, $event)" v-if="post.saved == false" type="button" class="btn btn-primary">Save</button>
                       </li>
                   </ul>
 
@@ -52,7 +52,6 @@ function addMarkers(map, data) {
 }
 
 function locatePostOnMap(post) {
-    window.location.hash='map';
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: post.location.lat,
@@ -163,7 +162,7 @@ function listPosts(posts) {
             },
             locateInstaPosts: function(post) {
                 if (post.location) {
-                    locatePostOnMap(post);
+                    window.location.hash='map';
                 } else {
                     alert('No location found with this post');
                 }
