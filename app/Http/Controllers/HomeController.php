@@ -94,7 +94,7 @@ class HomeController extends Controller
             $filteredPost['id'] = $posts[$index]->id;
             $filteredPost['thumbnail'] = $posts[$index]->images->thumbnail;
             $filteredPost['standard_resolution'] = $posts[$index]->images->standard_resolution;
-            $filteredPost['caption'] = $posts[$index]->caption->text;
+            $filteredPost['caption'] = $posts[$index]->caption ? $posts[$index]->caption->text : '';
             $filteredPost['type'] = $posts[$index]->type;
             
            
