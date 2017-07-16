@@ -14,7 +14,7 @@
                             <label for="name" class="col-md-4 control-label">First Name</label>
 
                             <div class="col-md-6">
-                                <input id="firstName" type="text" class="form-control" name="firstName" value="{{ old('firstName') }} Sandip" required autofocus>
+                                <input id="firstName" type="text" class="form-control" name="firstName" value="{{ old('firstName') }}" required autofocus>
 
                                 @if ($errors->has('firstName'))
                                     <span class="help-block">
@@ -28,7 +28,7 @@
                             <label for="name" class="col-md-4 control-label">Last Name</label>
 
                             <div class="col-md-6">
-                                <input id="lastName" type="text" class="form-control" name="lastName" value="{{ old('lastName') }}  k" required autofocus>
+                                <input id="lastName" type="text" class="form-control" name="lastName" value="{{ old('lastName') }}" required autofocus>
 
                                 @if ($errors->has('lastName'))
                                     <span class="help-block">
@@ -42,7 +42,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }} sandip.k@gmail.com" required>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -56,7 +56,7 @@
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required value="aaaaaa">
+                                <input id="password" type="password" class="form-control" name="password" required >
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
