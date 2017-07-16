@@ -119,7 +119,7 @@ class HomeController extends Controller
             array_push($postIds, $filteredPost['id']);
         }
 
-        $DbPosts = Posts::whereIn('postId',$postIds)->get();
+        $DbPosts = Posts::whereIn('postId',$postIds)->where('email', Auth::user()->email)->get();
         
          $savedPostIds = array();
         foreach ($DbPosts as $dbPost) {
